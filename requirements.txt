@@ -1,0 +1,23 @@
+# --- LLM + embeddings (Google Gemini) ---
+google-genai>=1.0.0
+
+# --- Agent framework ---
+langgraph>=0.2.0
+
+# --- Vector database for RAG ---
+chromadb>=0.5.0
+
+# --- MCP (Model Context Protocol) server + client ---
+mcp>=1.2.0
+
+# --- PostgreSQL driver (used only inside the MCP server) ---
+psycopg[binary]>=3.1
+
+# --- Utilities ---
+python-dotenv>=1.0.0
+
+# --- Optional web UI ---
+streamlit>=1.30.0
+
+# --- Testing ---
+pytest>=8.0.0

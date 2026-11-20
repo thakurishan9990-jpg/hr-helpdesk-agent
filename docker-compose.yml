@@ -1,0 +1,26 @@
+# Starts a PostgreSQL database for the helpdesk.
+# Run:   docker compose up -d
+# Stop:  docker compose down        (add -v to also delete the data)
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: helpdesk-postgres
+    environment:
+      POSTGRES_USER: helpdesk
+      POSTGRES_PASSWORD: helpdesk_pw
+      POSTGRES_DB: helpdesk
+    ports:
+      # host port 5433 -> container port 5432 (5433 avoids clashing with a local Postgres)
+      - "5433:5432"
+    volumes:
+      # Any .sql file in this folder runs automatically the FIRST time the DB starts.
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U helpdesk -d helpdesk"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
